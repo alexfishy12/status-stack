@@ -3,6 +3,7 @@ const cron = require('node-cron');
 const Database = require('better-sqlite3');
 
 const db = new Database('statusstack.db');
+db.pragma('foreign_keys = ON');
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS services (
@@ -15,12 +16,12 @@ db.prepare(`
 db.prepare(`
     CREATE TABLE IF NOT EXISTS pings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        service TEXT NOT NULL,
-        url TEXT NOT NULL,
+        service_id INTEGER NOT NULL,
         status TEXT NOT NULL,
         err TEXT,
         responseTime INTEGER,
-        timestamp TEXT NOT NULL
+        timestamp TEXT NOT NULL,
+        FOREIGN KEY (service_id) REFERENCES services(id) on DELETE CASCADE
     );
 `).run();
 
@@ -43,6 +44,10 @@ function insertPingToDB(pingResult) {
         pingResult['responseTime'], 
         pingResult['timestamp']
     );
+}
+
+function getServices() {
+    
 }
 
 async function pingUrl(url, timeoutMs = 10000) {

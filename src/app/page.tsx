@@ -1,7 +1,11 @@
 //import Image from "next/image";
 import { TrendingUp } from 'lucide-react';
+import TrackNewApp from '@/components/modals/track-new-app';
+import db from '@/lib/db';
 
 export default function Home() {
+  const services = db.prepare('SELECT id, service, url FROM services').all() as { id: number; service: string; url: string }[];
+
   return (
     <div className="flex flex-col items-center justify-center p-10 w-full">
       {/* App logo */}
@@ -17,23 +21,25 @@ export default function Home() {
       {/* Applications list */}
       <div className="flex justify-between border-b-2 border-gray-500 w-full mb-5 pb-2">
         <div className="heading2">Applications</div>
-        <button className="bg-blue-700 rounded-lg px-3 py-2 font-bold text-white cursor-pointer">Track New +</button>
+        <TrackNewApp></TrackNewApp>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
-        {/* Card for application */}
-        <a href="/applications/1" className="bg-white rounded-lg p-5 border-2 border-gray-200 w-full">
-          {/* Card header */}
-          <div className="heading3">YouTube to MP3</div>
-          {/* URL of app */}
-          <div className="text-[0.75rem] font-light text-gray-500">http://youtube-to-mp3.home</div>
-          {/* Status bubble */}
-          <div className="flex gap-1 items-center">
-            <div className="bg-green-400 rounded-full h-[10px] w-[10px]"></div>
-            <div className="subheading3 text-gray-500">Online for 3d 2h 5m</div>
-          </div>
-          <div className="text-[0.75rem] font-light text-gray-500">Up since: May 1st, 2025</div>
-        </a>
+        {services.map(s => (
+          <a key={s.id} href="/applications/1" className="bg-white rounded-lg p-5 border-2 border-gray-200 w-full">
+            {/* Card header */}
+            <div className="heading3">{s.service}</div>
+            {/* URL of app */}
+            <div className="text-[0.75rem] font-light text-gray-500">{s.url}</div>
+            {/* Status bubble */}
+            <div className="flex gap-1 items-center">
+              <div className="bg-green-400 rounded-full h-[10px] w-[10px]"></div>
+              <div className="subheading3 text-gray-500">Online for 3d 2h 5m</div>
+            </div>
+            <div className="text-[0.75rem] font-light text-gray-500">Up since: May 1st, 2025</div>
+          </a>
+        ))}
+        
         {/* Card for application */}
         <a href="/applications/1" className="bg-white rounded-lg p-5 border-2 border-gray-200">
           {/* Card header */}
