@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/lib/db';
+import db from '@/lib/db/db';
 
 export async function createService(data: { name: string; url: string; }) {
     try {
