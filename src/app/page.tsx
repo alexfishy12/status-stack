@@ -70,7 +70,7 @@ export default function Home() {
                   <div className="flex gap-1 items-center">
                     <div className="bg-green-400 rounded-full h-[10px] w-[10px]"></div>
                     <div className="text-[0.75rem] font-light text-gray-500">{s.responseTime}ms</div>
-                    <div className="subheading3 text-gray-500">Online {s.earliest_up} {s.earliest_up ? 'for ' + formatDurationSince(s.earliest_up) : ''}</div>
+                    <div className="subheading3 text-gray-500">Online {s.earliest_up ? 'for ' + formatDurationSince(s.earliest_up) : ''}</div>
                   </div>
                   <div className="text-[0.75rem] font-light text-gray-500">
                     Up since: {formatUptimeDate(s.earliest_up) || 'Always'}

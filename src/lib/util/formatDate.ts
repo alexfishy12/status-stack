@@ -8,7 +8,9 @@ export function formatUptimeDate(dateStr?: string | null): string | null {
 export function formatDurationSince(dateStr?: string | null): string | null {
     if (!dateStr) return null;
 
-    const start = typeof dateStr === 'string' ? parseISO(dateStr) : new Date(dateStr);
+    const start = new Date(dateStr);
+    if (isNaN(start.getTime())) return null; 
+    
     const end = new Date();
 
     const duration = intervalToDuration({start, end});
