@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { createClient } from '@/utils/supabase/server';
+
 import Header from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 
@@ -20,17 +22,20 @@ export const metadata: Metadata = {
   description: "Analytics Dashboard for App Uptime",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createClient();
+  const { data: { user } } = await (await supabase).auth.getUser();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 flex flex-col min-h-screen`}
       >
-        <Header></Header>
+        <Header user={user}></Header>
         <div className="flex-grow">
           {children}
         </div>

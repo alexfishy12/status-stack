@@ -3,8 +3,14 @@
 -- creates services table
 CREATE TABLE IF NOT EXISTS services (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        service TEXT NOT NULL,
         url TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_services (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT NOT NULL,
+    service_id INTEGER NOT NULL,
+    FOREIGN KEY (service_id) REFERENCES services(id) on DELETE CASCADE
 );
 
 -- creates pings table

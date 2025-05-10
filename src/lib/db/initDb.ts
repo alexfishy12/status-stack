@@ -4,10 +4,20 @@ import db from '@/lib/db/db';
 db.prepare(`
     CREATE TABLE IF NOT EXISTS services (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        service TEXT NOT NULL,
         url TEXT NOT NULL
     );
 `).run();
+
+// creates user services table
+db.prepare(`
+    CREATE TABLE IF NOT EXISTS user_services (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id TEXT NOT NULL,
+        service_id INTEGER NOT NULL,
+        FOREIGN KEY (service_id) REFERENCES services(id) on DELETE CASCADE
+    );
+`).run();
+
 
 // creates pings table
 db.prepare(`

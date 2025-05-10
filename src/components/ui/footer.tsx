@@ -16,8 +16,8 @@ export default function Footer() {
 
             {/* Navigation */}
             <div className="flex gap-2 text-[0.75rem] text-gray-400 underline">
-                <Link href="/">Github</Link>
-                <Link href="/overview">X</Link>
+                <Link href="https://github.com/alexfishy12/status-stack" target="_blank">Github</Link>
+                <Link href="https://x.com/alexjfisher0330" target="_blank">X</Link>
             </div>
         </div>
     );
