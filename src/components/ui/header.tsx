@@ -1,7 +1,8 @@
 'use client';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Button from '@/components/ui/button';
 
 import { createClient } from '@/utils/supabase/client';
 
@@ -31,6 +32,7 @@ export default function Header({user}: HeaderProps) {
             {/* Navigation */}
             <div className="flex gap-5 subheading1 text-gray-500 underline">
                 <Link href="/">Home</Link>
+                <Link href="/pricing">Pricing</Link>
                 <Link href="/dashboard">Dashboard</Link>
             </div>
 
@@ -41,7 +43,7 @@ export default function Header({user}: HeaderProps) {
                     <button onClick={handleLogOut} className="bg-black rounded-lg px-3 py-2 font-bold text-white cursor-pointer">Logout</button>
                 </div>
             ) : (
-                <Link href="/login" className="bg-black rounded-lg px-3 py-2 font-bold text-white cursor-pointer">Login</Link>
+                <Button href="/login" className="bg-black rounded-lg px-3 py-2 font-bold text-white">Login</Button>
             )
             }
         </div>

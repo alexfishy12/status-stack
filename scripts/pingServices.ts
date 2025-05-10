@@ -4,7 +4,6 @@ import db from '@/lib/db/db';
 
 interface Service {
     id: number;
-    service: string;
     url: string;
 };
 
@@ -15,7 +14,7 @@ function refreshServicesIfNeeded() {
     const newest = (db.prepare('SELECT MAX(ID) as maxId from services').get() as { maxId: number | null })?.maxId || 0;
 
     if (newest > lastCheckedServiceId) {
-        services = db.prepare('SELECT id, service, url FROM services').all() as { id: number; service: string; url: string }[];
+        services = db.prepare('SELECT id, url FROM services').all() as { id: number; url: string }[];
         lastCheckedServiceId = newest;
         console.log(`Refreshed services list. New count: ${services.length}`);
     }

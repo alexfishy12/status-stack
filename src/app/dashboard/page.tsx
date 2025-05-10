@@ -3,10 +3,11 @@ import { TrendingUp } from 'lucide-react';
 import TrackNewApp from '@/components/modals/track-new-app';
 import db from '@/lib/db/db';
 import { formatUptimeDate, formatDurationSince } from '@/lib/util/formatDate';
+import { createClient } from '@/utils/supabase/server';
 
 interface Service {
   id: number; 
-  service: string; 
+  service_name: string; 
   url: string; 
   responseTime: number;
   created_at: string; 
@@ -20,14 +21,17 @@ interface Service {
   earliest_down: string;
 }
 
-export default function Home() {
+export default async function Dashboard() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const userId = user?.id;
+
   const services = db.prepare(`
     SELECT
       id,
-      service,
+      service_name,
       url,
       responseTime,
-      created_at,
       is_up,
       ever_up,
       last_pinged,
@@ -36,11 +40,12 @@ export default function Home() {
       last_up,
       earliest_up,
       earliest_down
-    FROM service_statuses
-  `).all() as Service[];
+    FROM vServiceStatuses
+    where user_id = ?
+  `).all(userId) as Service[];
 
   return (
-    <div className="flex flex-col items-center justify-center p-10 w-full">
+    <div className="p-10 w-full">
       {/* App logo */}
       <div className="flex flex-col items-center justify-center mb-5 sm:mb-10 md:md-15 lg:md-20">
         <div className="flex gap-5 items-center">
@@ -61,7 +66,7 @@ export default function Home() {
         {services.map(s => (
           <a key={s.id} href={`/applications/${s.id}`} className="bg-white rounded-lg p-5 border-2 border-gray-200 w-full">
             {/* Card header */}
-            <div className="heading3">{s.service}</div>
+            <div className="heading3">{s.service_name}</div>
             {/* URL of app */}
             <div className="text-[0.75rem] font-light text-gray-500">{s.url}</div>
             {/* Status */}
