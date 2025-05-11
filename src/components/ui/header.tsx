@@ -43,7 +43,7 @@ export default function Header({user}: HeaderProps) {
                     <button onClick={handleLogOut} className="bg-black rounded-lg px-3 py-2 font-bold text-white cursor-pointer">Logout</button>
                 </div>
             ) : (
-                <Button href="/login" className="bg-black rounded-lg px-3 py-2 font-bold text-white">Login</Button>
+                <Button href="/auth/login" className="bg-black rounded-lg px-3 py-2 font-bold text-white">Login</Button>
             )
             }
         </div>

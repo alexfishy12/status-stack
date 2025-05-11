@@ -11,7 +11,7 @@ export default function Pricing() {
         </div>
 
         {/* Pricing Tiers */}
-        <div className="flex flex-col lg:flex-row items-center gap-5 justify-center">
+        <div className="flex flex-col lg:flex-row items-start gap-5">
           <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col gap-3 items-center max-w-sm w-full">
             {/* Header */}
             <div className="border-b border-gray-300 w-full items-center justify-center flex flex-col gap-2 pb-2">
@@ -34,7 +34,7 @@ export default function Pricing() {
             </div>
             {/* Call to action */}
             <Button 
-              href="/signup?plan=free" 
+              href="/auth/signup?plan=free" 
               className="bg-gradient-to-r from-gray-700 to-gray-500 text-white w-full text-center"
             >
               Start for Free
@@ -62,10 +62,10 @@ export default function Pricing() {
             </div>
             {/* Call to action */}
             <Button 
-              href="/signup?plan=pro" 
+              href="/auth/signup?plan=pro" 
               className="bg-gradient-to-r from-green-700 to-green-500 text-white w-full text-center"
             >
-              Choose Pro plan ($6/month)
+              Choose Pro plan ($5.99/month)
             </Button>
           </div>
         </div>

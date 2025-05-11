@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from 'next/headers';
 import { Geist, Geist_Mono } from "next/font/google";
 import { createClient } from '@/utils/supabase/server';
 
@@ -27,6 +28,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = (await headers()).get('x-layout-path') || ''; // fallback for edge cases
+
+  const hideLayout = 
+    pathname.startsWith('/auth/login');
+
+  console.log(pathname);
+  console.log(hideLayout);
   const supabase = createClient();
   const { data: { user } } = await (await supabase).auth.getUser();
 
@@ -35,11 +43,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 flex flex-col min-h-screen`}
       >
-        <Header user={user}></Header>
+        {!hideLayout && <Header user={user}></Header> }
         <div className="flex-grow flex items-center justify-center">
           {children}
         </div>
-        <Footer></Footer>
+        {!hideLayout && <Footer></Footer> }
       </body>
     </html>
   );
