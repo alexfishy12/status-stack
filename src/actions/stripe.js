@@ -14,11 +14,11 @@ export async function fetchClientSecret() {
       {
         // Provide the exact Price ID (for example, price_1234) of
         // the product you want to sell
-        price: '{{PRICE_ID}}',
+        price: 'price_1RWn4KDuQs655Qzpd5juOdBJ',
         quantity: 1
       }
     ],
-    mode: 'payment',
+    mode: 'subscription',
     return_url: `${origin}/return?session_id={CHECKOUT_SESSION_ID}`,
     automatic_tax: {enabled: true},
   })

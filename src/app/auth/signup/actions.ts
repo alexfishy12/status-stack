@@ -41,13 +41,16 @@ export async function signup(formData: FormData) {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
   }
-
-  const { error } = await supabase.auth.signUp(data)
+  
+  const { data: signupData, error  } = await supabase.auth.signUp(data);
+  
+  console.log('Signup result:', signupData, error);
 
   if (error) {
+    console.error('Supabase signup error:', error);
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  revalidatePath('/', 'layout');
+  redirect('/auth/check-email'); // <-- Create this page to instruct user to confirm email
 }
